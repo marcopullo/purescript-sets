@@ -45,7 +45,7 @@ import Partial.Unsafe (unsafePartial)
 data Set a = Set (M.Map a Unit)
 
 -- | Create a set from a foldable structure.
-fromFoldable :: forall f a. (Foldable f, Ord a) => f a -> Set a
+fromFoldable :: forall f a. Foldable f => Ord a => f a -> Set a
 fromFoldable = foldl (\m a -> insert a m) empty
 
 -- | Convert a set to an unfoldable structure.
@@ -124,7 +124,7 @@ union :: forall a. Ord a => Set a -> Set a -> Set a
 union (Set m1) (Set m2) = Set (m1 `M.union` m2)
 
 -- | Form the union of a collection of sets
-unions :: forall f a. (Foldable f, Ord a) => f (Set a) -> Set a
+unions :: forall f a. Foldable f => Ord a => f (Set a) -> Set a
 unions = foldl union empty
 
 -- | Form the set difference
